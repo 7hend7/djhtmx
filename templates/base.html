@@ -1,0 +1,30 @@
+<!doctype html>
+        {%load static%}<!--load 'static param from settings'-->
+        {%include "./includes/head.html" %}
+
+<html>
+    {%block style%}
+    {%endblock%}
+    <body>
+        <div id="header">
+            {%block header%}
+            {%endblock%}
+        </div>
+        <div id="topmenu"><!-- align="left" -->
+            {%block topmenu%}
+            {%include "./includes/topmenu.html" %}
+            {%endblock%}
+        </div>
+
+    	<div id="main" ><!-- align="center" |style="margin-left:15%"-->
+    		{%block main%}
+    		{%endblock%}
+    	</div>
+        <div id="footer" class="footer">
+
+           {%include "./includes/footer.html" %}
+
+        </div>
+    </body>
+
+</html>

@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     # 
     'widget_tweaks',
     'django_htmx',
+    # apps
+    'todo',
 ]
 
 MIDDLEWARE = [
@@ -50,7 +52,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    #
+    # htmx
     "django_htmx.middleware.HtmxMiddleware",
 ]
 
@@ -59,8 +61,8 @@ ROOT_URLCONF = 'djhtmx.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
-        'APP_DIRS': True,
+        'DIRS': [BASE_DIR / 'templates',],
+        'APP_DIRS': True, # search templates of app in the 'app_name\templates' folder 
         'OPTIONS': {
             'context_processors': [
                 'django.template.context_processors.debug',
@@ -119,7 +121,9 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
-print(f'BASE_DIR is: {BASE_DIR}')
+# print(f'BASE_DIR is: {BASE_DIR}')
+print(f'Static is: {BASE_DIR / "static"}')
+
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_URL = 'static/'
 
