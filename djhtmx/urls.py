@@ -20,5 +20,5 @@ import todo.urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     #
-    path('home/', include('todo.urls')),  # todos
+    path('todos/', include('todo.urls')),
 ]
