@@ -3,8 +3,13 @@ from django.shortcuts import render
 
 from django.template import Context, Template
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
-from django.shortcuts import redirect
+
 import django.urls as urls
+from django.urls import reverse
+from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponse, HttpResponseNotAllowed, HttpResponseRedirect
+
 from django.views.generic.base import TemplateView, ContextMixin
 from django.views.generic.edit import ProcessFormView, BaseCreateView, FormMixin
 from django.views.generic.list import ListView
@@ -37,4 +42,30 @@ class ListTodoView(ListView):
         return super().get_context_data(**kwargs)
 
 
+# I return an instance of this class to redirect the client
+class HttpResponseHtmxRedirect(HttpResponseRedirect):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self['HX-Redirect'] = self['Location']
+    status_code = 200
 
+
+def delete_todo(request, id):
+
+    todo = get_object_or_404(Todos, id=id)
+
+    if request.method == "DELETE":
+        try:
+            todo.delete()
+        except Exception as e:
+            error_message = "delete error is: " + str(e)
+            return HttpResponse(error_message)
+    
+    response = response = HttpResponseHtmxRedirect(reverse("list_todo"))
+    return response
+
+        # return HttpResponse("Todo was deleted")
+        # return redirect(reverse("todo:list_todo"))
+        # return render(request, "todo_list.html", {})
+        
+    
