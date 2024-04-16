@@ -3,9 +3,10 @@
         {%include "./includes/head.html" %}
 
 <html>
-    {%block style%}
-    {%endblock%}
+
     <body hx-headers='{"X-CSRFToken": "{{ csrf_token }}"}'>
+        {%block style%}
+        {%endblock%}    
         <div id="header">
             {%block header%}
             {%endblock%}

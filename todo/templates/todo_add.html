@@ -1,13 +1,44 @@
 {%extends "base.html"%}
-{%load static%}
+{%load static i18n%}
 
 {% block style %}
+<style>
+.container {
+    margin-top:2em;
+}
+</style>
 {% endblock style %}
 
 {%block main%}
+<div class="container">
+<div class="row">
+    <div class="col-md-4">
+    </div>
+    <div class="col-md-4">
+        <form class="col p-5 shadow bg-light align-self-center text-center border border-primary rounded"
+        action="{% url 'add_todo' %}" method="post" novalidate>
+        <!-- test -->
+        {% if messages %}
+            <ul class="messages text_color bg-info">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }} list-unstyled" {% endif %}>{{ message }}
+                    </li>
+                    {% endfor %}
+            </ul>
+        {% endif %}
+        <!-- -->
+        {% csrf_token %}
 
-        <div class="container mt-5">
-            <h2>{{message}}</h2>
-        </div>
-    
+        <!-- -->
+        {% include "./includes/formload.html" %}
+
+        <button type="submit" class="btn btn-lg btn-primary mt-4 mt-sm-3 mt-md-3 shadow text-white"
+            value="">Add</button>
+        </form>
+    </div>
+    <div class="col-md-4">
+    </div>
+</div>
+</div>
+
 {%endblock main%}

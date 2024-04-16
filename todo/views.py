@@ -16,7 +16,10 @@ from django.views.generic.edit import ProcessFormView, BaseCreateView, FormMixin
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView, BaseDetailView
 from django.conf import settings
+from django.views.generic import CreateView
+
 from .models import Todos
+from .forms import TodoCreateUpdateForm
 
 
 class ListTodoView(ListView):
@@ -75,7 +78,22 @@ def delete_todo(request, id):
     # return HttpResponse("Todo was deleted")
     # return redirect(reverse("todo:list_todo"))
 
-        
-@require_http_methods(['GET'])
+
+# class TodoCreateView(CreateView):
+#     model = Todos
+#     template_name = 'product/todo_add.html'
+#     form_class = TodoCreateUpdateForm
+
+@require_http_methods(['GET', 'POST'])
 def add_todo(request):
-    return render(request, "todo_add.html", {"message": "Add todo form should be here.."})
+    if request.method == "POST":
+        form = TodoCreateUpdateForm(request.POST)
+        if form.is_valid():
+            # process the data in form.cleaned_data as required
+            # ...
+            form.save()
+            return HttpResponseRedirect(reverse('list_todo'))
+    else:
+        # create empty form for sending it to client
+        form = TodoCreateUpdateForm()
+    return render(request, "todo_add.html", {'form': form})

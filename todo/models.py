@@ -11,6 +11,6 @@ class Todos(models.Model):
         return self.name
     
     class Meta:
-        ordering = ['expired']
+        ordering = ['-expired']
         verbose_name = 'todos'
 

@@ -1,0 +1,65 @@
+
+
+<!-- use widget_tweaks widget "https://pypi.org/project/django-widget-tweaks/"-->
+
+
+{% load widget_tweaks %}
+{% for hidden_field in form.hidden_fields %}
+  {{ hidden_field }}
+{% endfor %}
+
+{% if form.non_field_errors %}
+<div class="alert alert-danger" role="alert">
+{% for error in form.non_field_errors %}
+  {{ error }}
+{% endfor %}
+</div>
+{% endif %}
+
+{% for field in form.visible_fields %}
+
+<!--  <div class="form-group"> -->
+
+{% if form.is_bound %}
+<div class="col-12 col-md-6">
+  {% if field.errors %}
+
+          <div class="form-group input-group border border-primary rounded">
+              <div class="input-group-prepend bg-secondary text_color">
+                    <span class="input-group-text text_color">{{field.label}}</span>
+              </div>
+                {% render_field field class="form-control is-invalid" %}
+              <div class="invalid-feedback">
+                {% for error in field.errors %}
+                    {{ error }}
+                {% endfor %}
+              </div>
+          </div>
+
+
+  {% else %}
+          <div class="form-group input-group border border-primary rounded">
+              <div class="input-group-prepend bg-secondary text_color">
+                    <span class="input-group-text text_color">{{field.label}}</span>
+              </div>
+                {% render_field field class="form-control is-valid border-primary shadow bg-light"%} <!-- placeholder=field.label -->
+              <div class="invalid-feedback"></div>
+          </div>
+  {% endif %}
+</div>
+{% else %}
+      <div class="col-12 col-md-6">
+          <div class="form-group input-group border border-primary rounded">
+              <div class="input-group-prepend bg-secondary text_color">
+                    <span class="input-group-text text_color">{{field.label}}</span>
+              </div>
+      {% render_field field class="form-control shadow bg-light" %}
+              <div class="invalid-feedback"></div>
+          </div>
+{% if field.help_text %}
+  <small class="form-text text-muted">{{ field.help_text }}</small>
+{% endif %}
+     </div>
+{% endif %}
+<!--  </div> -->
+{% endfor %}
