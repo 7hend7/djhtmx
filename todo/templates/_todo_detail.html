@@ -10,13 +10,16 @@
     </ul>
     </td>
     <td id="close_detail_todo">
-        <button class="btn btn-danger" title="close" hx-on:click=warn()></button>
+        <button class="btn btn-danger" title="close" hx-on:click=hide_detail_info()>x</button>
     </td>
 
     {% block script %}
     <script>
-        function warn(){
-            alert("!")
+        function hide_detail_info(){
+            const td_detail =  document.getElementById("item_detail_todo")
+            const bt_close = document.getElementById("close_detail_todo")
+            td_detail.parentNode.removeChild(td_detail);
+            bt_close.parentNode.removeChild(bt_close);
         }
     </script>
     {% endblock script %}
