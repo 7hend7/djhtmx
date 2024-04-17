@@ -47,16 +47,19 @@
                             <td name="expired" id="expired" hx-get="/update/{{todo.id}}" hx-trigger="change">{{todo.expired}}</td>
                             <td>
                                 <button class="btn btn-primary" title="update"></button>
-                                <button class="btn btn-info" title="info"></button>
+                                <button class="btn btn-info" title="info" hx-trigger="click" hx-swap="innerHTML" hx-target="next tr" hx-get={% url 'detail_todo' id=todo.id %} ></button>
                                 <button class="btn btn-danger" title="delete" hx-delete={% url 'delete_todo' id=todo.id %} 
                                     hx-trigger="click" hx-target="#status" hx-swap="innerHTML" hx-confirm="Are you sure you want to delete this todo?"></button>
                                 
                             </td>
                         </tr>
+                        <tr class="detail_todo">
+                        </tr>
                     {% endfor %}
                 </tbody>
             </table>
         </div>
+
         <div class="w-100 text-info bg-dark text-center" id="status">
         </div>
     

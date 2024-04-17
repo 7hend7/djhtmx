@@ -97,3 +97,12 @@ def add_todo(request):
         # create empty form for sending it to client
         form = TodoCreateUpdateForm()
     return render(request, "todo_add.html", {'form': form})
+
+
+@require_http_methods(['GET', 'POST'])
+def detail_todo(request, id):
+    obj = get_object_or_404(Todos, id=id)
+    print(f" get object: {obj}")
+    return render(request, "_todo_detail.html", {'item': obj})
+
+
