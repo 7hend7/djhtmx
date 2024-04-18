@@ -5,19 +5,21 @@
 <style>
 .container {
     margin-top:2em;
+    display: flex;
+    justify-content: center;
 }
+.div_form {
+                width: 33%;
+            }
 </style>
 {% endblock style %}
 
 {%block main%}
 <div class="container">
-<div class="row">
-    <div class="col-md-4">
-    </div>
-    <div class="col-md-4">
+    <div class="div_form" >
         <form class="col p-5 shadow bg-light align-self-center text-center border border-primary rounded"
-        action="{% url 'add_todo' %}" method="post" novalidate>
-        <!-- test -->
+            action="{% url 'add_todo' %}" method="post" novalidate>
+
         {% if messages %}
             <ul class="messages text_color bg-info">
                 {% for message in messages %}
@@ -36,9 +38,6 @@
             value="">Add</button>
         </form>
     </div>
-    <div class="col-md-4">
-    </div>
-</div>
 </div>
 
 {%endblock main%}

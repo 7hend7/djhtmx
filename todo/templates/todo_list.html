@@ -10,11 +10,12 @@
 {% endblock style%}
 
 {%block main%}
-
+        
         <div class="container mt-5">
             <div>
                 <h2 class="mb-4">To-Do List</h2>
                 <!--
+                https://hypermedia.systems/htmx-in-action/
                 Boosted Links (hx-boost="true")
                 Let’s take a look at an example of a boosted link. Below is a link to a hypothetical settings page for a web application. 
                 Because it has hx-boost="true" on it, htmx will halt the normal link behavior of issuing a request to the /add
@@ -56,13 +57,24 @@
                         <tr class="detail_todo">
                         </tr>
                     {% endfor %}
+                    {% if page_obj.has_next %}
+                        <tr>
+                            <td colspan="4" style="text-align: center">
+                                <button class="btn-primary" hx-target="closest tr"
+                                    {# hx-trigger="revealed" #}
+                                    hx-swap="outerHTML"
+                                    hx-select="tbody > tr"
+                                    hx-get={% url 'list_todo' page=page_obj.number|add:1 %} >
+                                        >>>
+                                </button>
+                            </td>
+                        </tr>                        
+                    {% endif %}
                 </tbody>
             </table>
         </div>
 
         <div class="w-100 text-info bg-dark text-center" id="status">
         </div>
-    
-
 
 {%endblock main%}

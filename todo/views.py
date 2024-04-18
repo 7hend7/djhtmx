@@ -18,16 +18,23 @@ from django.views.generic.detail import DetailView, BaseDetailView
 from django.conf import settings
 from django.views.generic import CreateView
 
+from django.core.paginator import Paginator
+
 from .models import Todos
 from .forms import TodoCreateUpdateForm
+
+# consts
+TODO_LISTVIEW_PAGINATE_BY = 5
 
 
 class ListTodoView(ListView):
     template_name = "todo_list.html"
     model = Todos
 
+    paginate_by = TODO_LISTVIEW_PAGINATE_BY
+
     # our context variable name
-    context_object_name = 'todo_list' 
+    context_object_name = 'todo_list'
     # allow empty list 'todo_list' 
     allow_empty = True
 
@@ -104,5 +111,6 @@ def detail_todo(request, id):
     obj = get_object_or_404(Todos, id=id)
     print(f" get object: {obj}")
     return render(request, "_todo_detail.html", {'item': obj})
+
 
 
