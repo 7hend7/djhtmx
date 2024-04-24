@@ -18,14 +18,14 @@ from django.views.generic.detail import DetailView, BaseDetailView
 from django.conf import settings
 from django.views.generic import CreateView
 
-<<<<<<< HEAD
+
 from django.core.paginator import Paginator
-=======
+
 from http import HTTPStatus
->>>>>>> 1f83b222b6e9ea461a66e999440f582981acce47
 
 from .models import Todos
 from .forms import TodoCreateUpdateForm
+
 
 # consts
 TODO_LISTVIEW_PAGINATE_BY = 5
@@ -118,9 +118,7 @@ def detail_todo(request, id):
 
 # from django.utils.dateparse import parse_date
 
-<<<<<<< HEAD
 
-=======
 @require_http_methods(['POST'])
 def update_todo(request, id):
 
@@ -143,4 +141,3 @@ def update_todo(request, id):
         return HttpResponse(HTTPStatus.BAD_REQUEST)
 
 # MyTable.objects.filter(pk=some_value).update(field1='some value')
->>>>>>> 1f83b222b6e9ea461a66e999440f582981acce47
