@@ -44,21 +44,21 @@
                     {% for todo in todo_list %}
                         <tr>
                             <td>
-                                <input type="text" name="name" id="name" hx-post={% url 'update_todo' id=todo.id %} hx-trigger="change" hx-target="next #mess" value="{{todo.name}}">
+                                <textarea type="text" name="name" id="name" hx-post={% url 'update_todo' id=todo.id %} hx-trigger="change" hx-target="next #mess"  disabled> {{todo.name}} </textarea> <!--  value="{{todo.name}}" -->
                                 <span id="mess"></span>
                             </td>
                             <td>
                                 <input  type="image" name="completed" id="completed" {% if todo.completed %} src="{% static 'icons/completed.png' %}" {% else %} src="{% static 'icons/uncompleted.png' %}" {% endif %}
                                     hx-post={% url 'update_todo' id=todo.id %} hx-on:click=check_completed_click(this) hx-trigger="click delay:500ms" hx-target="next #mess"
-                                    value={{todo.completed}} width="24" height="24">
+                                    value={{todo.completed}} width="24" height="24"  disabled>
                                 <span id="mess"></span>
                             </td>
                             <td>
-                                <input type="date" name="expired" id="expired" hx-post={% url 'update_todo' id=todo.id %} hx-trigger="change" hx-target="next #mess" value={{todo.expired|date:"Y-m-d"}}> <!-- change, keyup delay:1500ms changed-->
+                                <input type="date" name="expired" id="expired" hx-post={% url 'update_todo' id=todo.id %} hx-trigger="change" hx-target="next #mess" value="{{todo.expired|date:'Y-m-d'}}"  disabled> <!-- change, keyup delay:1500ms changed-->
                                 <span id="mess"></span>
                             </td>
                             <td>
-                                <button class="btn btn-primary" title="update"></button>
+                                <button class="btn btn-primary" title="update" hx-on:click=update_onclick(this)></button>
                                 <button class="btn btn-info" title="info" hx-trigger="click" hx-swap="innerHTML" hx-target="next tr" hx-get={% url 'detail_todo' id=todo.id %} ></button>
                                 <button class="btn btn-danger" title="delete" hx-delete={% url 'delete_todo' id=todo.id %} 
                                     hx-trigger="click" hx-target="#status" hx-swap="innerHTML" hx-confirm="Are you sure you want to delete this todo?"></button>
@@ -96,6 +96,15 @@
                 }else{
                     elm.value = "False"
                     elm.src = "{% static 'icons/uncompleted.png' %}"
+                }
+            }
+
+            function update_onclick(elm){
+                const siblings = ele => [].slice.call(ele.parentNode.children).filter((child) => (child !== ele));
+                const tds = siblings(elm.parentNode)
+                for (td of tds){
+                    let td_child = td.firstElementChild
+                    td_child.removeAttribute('disabled')
                 }
             }
         </script>
