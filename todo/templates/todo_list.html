@@ -48,7 +48,9 @@
                                 <span id="mess"></span>
                             </td>
                             <td>
-                                <input  type="text" name="completed" id="completed" hx-post={% url 'update_todo' id=todo.id %} hx-trigger="change" hx-target="next #mess" value={{todo.completed}}>
+                                <input  type="image" name="completed" id="completed" {% if todo.completed %} src="{% static 'icons/completed.png' %}" {% else %} src="{% static 'icons/uncompleted.png' %}" {% endif %}
+                                    hx-post={% url 'update_todo' id=todo.id %} hx-on:click=check_completed_click(this) hx-trigger="click delay:500ms" hx-target="next #mess"
+                                    value={{todo.completed}} width="24" height="24">
                                 <span id="mess"></span>
                             </td>
                             <td>
@@ -85,5 +87,17 @@
 
         <div class="w-100 text-info bg-dark text-center" id="status">
         </div>
-
+        {% block script %}
+        <script>
+            function check_completed_click(elm){
+                if(elm.value === "False"){                    
+                    elm.value = "True"
+                    elm.src = "{% static 'icons/completed.png' %}"
+                }else{
+                    elm.value = "False"
+                    elm.src = "{% static 'icons/uncompleted.png' %}"
+                }
+            }
+        </script>
+        {% endblock script %}
 {%endblock main%}

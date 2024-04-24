@@ -129,15 +129,16 @@ def update_todo(request, id):
     data["completed"] = request.POST.get("completed", obj.completed)
     data["expired"] = request.POST.get("expired", obj.expired)
 
+    print(f"-> completed contain:{request.POST.__contains__("completed")} / {request.POST.get("completed")}")
     print(f"-> data is {data}")
 
     form = TodoCreateUpdateForm(data=data, instance=obj)  # request.POST or None 
     if form.is_valid():
-        # print(f"-> form is valid \n cleaned_data: {form.cleaned_data}")
+        print(f"-> form is valid \n cleaned_data: {form.cleaned_data}")
         form.save()
         return HttpResponse(HTTPStatus.OK)
     else:
-        # print(f"-> form is invalid \n  cleaned_data: {form.cleaned_data}")
+        print(f"-> form is invalid \n  cleaned_data: {form.cleaned_data}")
         return HttpResponse(HTTPStatus.BAD_REQUEST)
 
 # MyTable.objects.filter(pk=some_value).update(field1='some value')
