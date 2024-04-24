@@ -18,7 +18,11 @@ from django.views.generic.detail import DetailView, BaseDetailView
 from django.conf import settings
 from django.views.generic import CreateView
 
+<<<<<<< HEAD
 from django.core.paginator import Paginator
+=======
+from http import HTTPStatus
+>>>>>>> 1f83b222b6e9ea461a66e999440f582981acce47
 
 from .models import Todos
 from .forms import TodoCreateUpdateForm
@@ -112,5 +116,31 @@ def detail_todo(request, id):
     print(f" get object: {obj}")
     return render(request, "_todo_detail.html", {'item': obj})
 
+# from django.utils.dateparse import parse_date
 
+<<<<<<< HEAD
 
+=======
+@require_http_methods(['POST'])
+def update_todo(request, id):
+
+    data = {}
+    obj = get_object_or_404(Todos, id=id)
+
+    data["name"] = request.POST.get("name", obj.name)
+    data["completed"] = request.POST.get("completed", obj.completed)
+    data["expired"] = request.POST.get("expired", obj.expired)
+
+    print(f"-> data is {data}")
+
+    form = TodoCreateUpdateForm(data=data, instance=obj)  # request.POST or None 
+    if form.is_valid():
+        # print(f"-> form is valid \n cleaned_data: {form.cleaned_data}")
+        form.save()
+        return HttpResponse(HTTPStatus.OK)
+    else:
+        # print(f"-> form is invalid \n  cleaned_data: {form.cleaned_data}")
+        return HttpResponse(HTTPStatus.BAD_REQUEST)
+
+# MyTable.objects.filter(pk=some_value).update(field1='some value')
+>>>>>>> 1f83b222b6e9ea461a66e999440f582981acce47

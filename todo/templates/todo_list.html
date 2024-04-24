@@ -43,9 +43,18 @@
                 <tbody>
                     {% for todo in todo_list %}
                         <tr>
-                            <td name="name" id="name" hx-get="/update/{{todo.id}}" hx-trigger="change">{{todo.name}}</td>
-                            <td name="complated" id="complated" hx-get="/update/{{todo.id}}" hx-trigger="change">{% if todo.complated %} + {%else%} - {%endif%}</td>
-                            <td name="expired" id="expired" hx-get="/update/{{todo.id}}" hx-trigger="change">{{todo.expired}}</td>
+                            <td>
+                                <input type="text" name="name" id="name" hx-post={% url 'update_todo' id=todo.id %} hx-trigger="change" hx-target="next #mess" value="{{todo.name}}">
+                                <span id="mess"></span>
+                            </td>
+                            <td>
+                                <input  type="text" name="completed" id="completed" hx-post={% url 'update_todo' id=todo.id %} hx-trigger="change" hx-target="next #mess" value={{todo.completed}}>
+                                <span id="mess"></span>
+                            </td>
+                            <td>
+                                <input type="date" name="expired" id="expired" hx-post={% url 'update_todo' id=todo.id %} hx-trigger="change" hx-target="next #mess" value={{todo.expired|date:"Y-m-d"}}> <!-- change, keyup delay:1500ms changed-->
+                                <span id="mess"></span>
+                            </td>
                             <td>
                                 <button class="btn btn-primary" title="update"></button>
                                 <button class="btn btn-info" title="info" hx-trigger="click" hx-swap="innerHTML" hx-target="next tr" hx-get={% url 'detail_todo' id=todo.id %} ></button>
