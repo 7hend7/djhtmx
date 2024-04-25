@@ -57,7 +57,7 @@ class ListTodoView(ListView):
         return super().get_context_data(**kwargs)
 
 
-# I return an instance of this class to redirect the client
+# return an instance of this class to redirect the client
 class HttpResponseHtmxRedirect(HttpResponseRedirect):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -102,6 +102,7 @@ def add_todo(request):
         if form.is_valid():
             # process the data in form.cleaned_data as required
             # ...
+            print(f"-> form is valid: {form.cleaned_data}")
             form.save()
             return HttpResponseRedirect(reverse('list_todo'))
     else:
@@ -136,9 +137,9 @@ def update_todo(request, id):
     if form.is_valid():
         print(f"-> form is valid \n cleaned_data: {form.cleaned_data}")
         form.save()
-        return HttpResponse(HTTPStatus.OK)
+        return HttpResponse('Ok', HTTPStatus.OK)
     else:
         print(f"-> form is invalid \n  cleaned_data: {form.cleaned_data}")
-        return HttpResponse(HTTPStatus.BAD_REQUEST)
+        return HttpResponse('!', HTTPStatus.BAD_REQUEST)
 
 # MyTable.objects.filter(pk=some_value).update(field1='some value')

@@ -6,6 +6,7 @@
     .curpointer {
         cursor: pointer;
     }
+
 </style>    
 {% endblock style%}
 
@@ -30,17 +31,21 @@
                 <a href={% url 'add_todo' %} hx-boost="true"> <img class="curpointer" src="{% static 'icons/add.png' %}" /> </a>
             </div>
             
-            <table class="table">
+            <table class="table" >
                 <thead>
                     <tr>
                         <th scope="col">Task Name</th>
                         <th scope="col">Completed</th>
-                        <th scope="col">Date expired</th>
+                        <th style="background-color: lightblue;" scope="col" class="curpointer" hx-get={% url 'list_todo' %}
+                             hx-trigger="click" hx-target="#tbody"
+                             hx-swap="innerHTML" hx-select="tbody > tr">
+                                Date expired
+                            </th>
                         <th scope="col">Operations</th>
 
                     </tr>
                 </thead>
-                <tbody>
+                <tbody id="tbody">
                     {% for todo in todo_list %}
                         <tr>
                             <td>
@@ -70,14 +75,17 @@
                     {% endfor %}
                     {% if page_obj.has_next %}
                         <tr>
-                            <td colspan="4" style="text-align: center">
-                                <button class="btn-primary" hx-target="closest tr"
-                                    {# hx-trigger="revealed" #}
+                            <td colspan="4" style="text-align: center"
+                            <!-- swap loading by scrolling -->
+                               <span style="color:blue;"
+                                    hx-target="closest tr"
+                                    hx-trigger="revealed"
                                     hx-swap="outerHTML"
                                     hx-select="tbody > tr"
-                                    hx-get={% url 'list_todo' page=page_obj.number|add:1 %} >
-                                        >>>
-                                </button>
+                                    hx-get={% url 'list_todo' page=page_obj.number|add:1 %}
+                                >
+                                <i>>>>>next page>>>></i>
+                                </span>
                             </td>
                         </tr>                        
                     {% endif %}
