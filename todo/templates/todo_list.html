@@ -7,7 +7,24 @@
         cursor: pointer;
     }
 
-</style>    
+    #item_detail_todo {
+        width: 95%;
+        border-style: double;
+        border-color: black;
+        border-width: 1px;
+    }
+
+    #li_name {
+        /* background-color: lightgray; */
+        color: white;
+        background-color: blue;
+    }
+
+    .textarea_name {
+        width: 95%;
+    }
+
+</style>
 {% endblock style%}
 
 {%block main%}
@@ -29,6 +46,16 @@
                 You might reasonably ask: what’s the advantage here? We are issuing an AJAX request and simply replacing the entire body.                    
                 -->
                 <a href={% url 'add_todo' %} hx-boost="true"> <img class="curpointer" src="{% static 'icons/add.png' %}" /> </a>
+                <input id="nsearch" name="nsearch" type="text" style="margin-left: 2em;"/>
+                <button
+                    hx-target="#tbody"                    
+                    hx-include="#nsearch"
+                    hx-swap="outerHTML"
+                    hx-select="tbody"
+                    hx-get={% url 'list_todo' %}
+                >
+                    search
+                </button>
             </div>
             
             <table class="table" >
@@ -49,7 +76,7 @@
                     {% for todo in todo_list %}
                         <tr>
                             <td>
-                                <textarea type="text" name="name" id="name" hx-post={% url 'update_todo' id=todo.id %} hx-trigger="change" hx-target="next #mess"  disabled> {{todo.name}} </textarea> <!--  value="{{todo.name}}" -->
+                                <textarea class="textarea_name" type="text" name="name" id="name" hx-post={% url 'update_todo' id=todo.id %} hx-trigger="change" hx-target="next #mess"  disabled> {{todo.name}} </textarea> <!--  value="{{todo.name}}" -->
                                 <span id="mess"></span>
                             </td>
                             <td>
@@ -82,7 +109,7 @@
                                     hx-trigger="revealed"
                                     hx-swap="outerHTML"
                                     hx-select="tbody > tr"
-                                    hx-get={% url 'list_todo' page=page_obj.number|add:1 %}
+                                    hx-get={% url 'list_todo' page=page_obj.number|add:1%}{%if nsearch%}?nsearch={{nsearch}}{%endif%}
                                 >
                                 <i>>>>>next page>>>></i>
                                 </span>
@@ -114,6 +141,15 @@
                     let td_child = td.firstElementChild
                     td_child.removeAttribute('disabled')
                 }
+            }
+
+            function hide_detail_info(elm){
+                // console.log(`elm is: ${elm} parent: ${elm.parentNode}`)
+                const parent_td = elm.parentNode
+                // while (parent_td.firstChild){
+                //     parent_td.firstChild.remove()
+                // }
+                parent_td.remove()
             }
         </script>
         {% endblock script %}

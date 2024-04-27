@@ -10,7 +10,7 @@ from django.utils.dateparse import parse_date
 
 class TodoCreateUpdateForm(forms.ModelForm):
     name = forms.CharField(max_length=512, required=True, widget=forms.Textarea( attrs={'placeholder': 'Enter todo please', 'class': 'form-control'} ))
-    # completed = forms.BooleanField(required=False)
+    completed = forms.BooleanField(required=False, widget=forms.widgets.CheckboxInput(attrs={"hidden":"true"}), label='')
     expired = forms.DateField(required=False,  widget=forms.widgets.Input({'type':'date'}), )
 
     # def clean_expired(self):
@@ -20,6 +20,6 @@ class TodoCreateUpdateForm(forms.ModelForm):
 
     class Meta:
         model = Todos
-        fields = ['name', 'expired']
+        fields = ['name', 'expired', "completed"]
 
 

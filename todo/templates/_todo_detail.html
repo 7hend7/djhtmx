@@ -1,24 +1,16 @@
 
 <!-- partial template for htmx detail todo view -->
-    
+
     <td id="item_detail_todo">
         <button class="btn btn-danger" title="close" hx-on:click=hide_detail_info(this)>x</button>
-        <ul>
+        <ul id="ul_info">
             <li> <strong class="text-primary"> id = {{item.id}} </strong></li>
-            <li> <strong class="bg-info">name = {{item.name}}</strong></li>
+            <li id="li_name">
+                <div >
+                    <strong> name = "{{item.name}}" </strong>
+                </div>
+            </li>
             <li> <strong class="bg-light"> completed = {{item.completed}}</strong></li>
             <li> <strong class="btn-danger">expired = {{item.expired}}</strong></li>
         </ul>
     </td>
-
-    {% block script %}
-    <script>
-        function hide_detail_info(elm){
-            // console.log(`elm is: ${elm} parent: ${elm.parentNode}`)
-            const parent_td = elm.parentNode
-            while (parent_td.firstChild){
-                parent_td.firstChild.remove()
-            }
-        }
-    </script>
-    {% endblock script %}
